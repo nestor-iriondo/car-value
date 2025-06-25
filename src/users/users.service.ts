@@ -14,8 +14,12 @@ export class UsersService {
     // Hooks like @AfterInsert, @AfterUpdate, and @AfterRemove are triggered when using create and save but not if we .save directly
   }
 
-  async findOne(id: number): Promise<User | null> {
-    return this.repo.findOneBy({ id });
+  async findOne(id: number): Promise<User> {
+    const user = await this.repo.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
   }
 
   async find(email: string): Promise<User[]> {

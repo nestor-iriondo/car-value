@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user-dto';
 import { UsersService } from './users.service';
+import { UpdateUserDto } from './dtos/update-user-dto';
 
 @Controller('auth')
 export class UsersController {
@@ -23,29 +24,21 @@ export class UsersController {
 
   @Get(':id')
   async getUser(@Param('id') id: string) {
-    const userId = parseInt(id);
-    const user = await this.usersService.findOne(userId);
-    return user;
+    return await this.usersService.findOne(Number(id));
   }
 
   @Get()
   async getUsers(@Query('email') email: string) {
     return await this.usersService.find(email);
   }
-  // Note: The @Query decorator is used to extract query parameters from the request URL.
 
   @Put(':id')
-  async updateUser(
-    @Param('id') id: string,
-    @Body() body: Partial<CreateUserDto>,
-  ) {
-    const userId = parseInt(id);
-    return await this.usersService.update(userId, body);
+  async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return await this.usersService.update(Number(id), body);
   }
 
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
-    const userId = parseInt(id);
-    return await this.usersService.remove(userId);
+    return await this.usersService.remove(Number(id));
   }
 }
