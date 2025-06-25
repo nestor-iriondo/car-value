@@ -5,11 +5,8 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 // It is used in the UsersController to validate incoming requests for user creation
 export class CreateUserDto {
   @IsEmail()
-  email: string;
-
-  @IsString()
   @IsNotEmpty()
-  name: string;
+  email: string;
 
   @IsString()
   @IsNotEmpty()
