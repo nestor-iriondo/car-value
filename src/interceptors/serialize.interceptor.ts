@@ -4,8 +4,10 @@ import {
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UserDto } from 'src/users/dtos/user.dto';
 
 /**
  * SerializeInterceptor is a NestJS interceptor that transforms the response
@@ -21,6 +23,10 @@ export class SerializeInterceptor implements NestInterceptor {
       map((data: any) => {
         // Run something before the response is sent out
         console.log('Before the response is sent', data);
+        return plainToClass(UserDto, data, {
+          // Exclude properties not defined in UserDto. This is the key part of serialization.
+          excludeExtraneousValues: true,
+        });
       }),
     );
   }
