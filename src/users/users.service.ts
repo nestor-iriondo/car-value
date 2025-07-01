@@ -7,7 +7,7 @@ import { User } from './user.entity';
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
-  async create(email: string, password: string): Promise<User> {
+  async createUser(email: string, password: string): Promise<User> {
     const user = this.repo.create({ email, password }); // Creates an instance of User with the provided email and password
     return this.repo.save(user); // Saves the user instance to the database
     // Why use create and not directly save?
