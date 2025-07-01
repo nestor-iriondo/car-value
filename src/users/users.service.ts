@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 
-@Injectable()
+@Injectable() // Injectable decorator marks this class as a provider that can be injected into other parts of the application
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
