@@ -7,6 +7,7 @@ import {
   Delete,
   Get,
   Query,
+  Session,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -26,6 +27,11 @@ export class UsersController {
   @Post('signup')
   async createUser(@Body() body: CreateUserDto) {
     return this.authService.signup(body.email, body.password);
+  }
+
+  @Post('signin')
+  async signIn(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.email, body.password);
   }
 
   @Get(':id')
